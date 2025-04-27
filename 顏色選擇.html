@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #box {
+            width: 100vw;
+            height: 100vh;
+            background: #7a7a7a;
+            position: absolute;
+            margin: 0;
+
+        }
+
+        #table {
+            width: 450px;
+            height: 200px;
+            text-align: center;
+            border: 1.5px solid #000;
+            box-shadow: 10px 10px 15px white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: hsla(0, 0%, 100%, 0.5);
+
+        }
+
+
+
+        #table input {
+            display: inline-block;
+            vertical-align: middle;
+            width: 255px;
+            height: 30px;
+
+        }
+
+        #R-random,
+        #G-random,
+        #B-random {
+            display: inline-block;
+            width: 80px;
+            height: 30px;
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            border-radius: 10px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        #R-random:hover,
+        #G-random:hover,
+        #B-random:hover {
+            background: yellow;
+        }
+
+        #R-random:active,
+        #G-random:active,
+        #B-random:active {
+            background: yellow;
+            /* width: 85px;
+            height: 35px; */
+            transform: scale(1.1);
+        }
+
+        #reset {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: red;
+        }
+
+        #reset:hover {
+            text-shadow: 0px 0px 10px red;
+        }
+
+        #table p {
+            display: inline-block;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <!-- <form> -->
+    <table id="table" style="border-collapse: collapse;">
+        <tr style="background-color: lightgray;">
+            <td class="rgb"
+                style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;  border: 1px solid #000;  text-indent:3rem; text-align:justify "
+                colspan="2">R:0 /G: 0 /B: 0</td>
+            <td style="border: 1px solid #000;background:rgb(0, 0, 0);color: beige; ">
+                <i class="fa-duotone fa-solid fa-minus"></i> &nbsp;
+                <i class="fa-regular fa-square"></i> &nbsp;
+                <button id="reset"><i class=" fa-regular fa-square-xmark"></i></button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="range" id="rangeR" min="0" max="255" step="1" value="0">
+            </td>
+            <td>
+                <p id="rValue">0</p>
+            </td>
+            <td>
+                <button id="R-random">RANDOM</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="range" id="rangeG" min="0" max="255" step="1" value="0">
+            </td>
+            <td>
+                <p id="gValue">0</p>
+            </td>
+            <td><button id="G-random">RANDOM</button></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="range" id="rangeB" min="0" max="255" step="1" value="0">
+            </td>
+            <td>
+                <p id="bValue">0</p>
+            </td>
+            <td><button id="B-random">RANDOM</button></td>
+        </tr>
+
+    </table>
+    </form>
+
+    <script>
+
+        const R = document.getElementById('rangeR')
+        const G = document.getElementById('rangeG')
+        const B = document.getElementById('rangeB')
+
+        const box = document.getElementById('box')
+        const rgb = document.getElementsByClassName('rgb')[0]
+        let value = [0, 0, 0]
+
+        bgChange = () => {
+            box.style.background = `rgb(${value[0]} ${value[1]} ${value[2]})`
+
+        }
+        rgbTxt = () => {
+            rgb.innerText = `R: ${value[0]} / G: ${value[1]} /B: ${value[2]}`;
+        }
+
+        R.oninput = () => {
+            rValue.innerText = R.value
+            console.log('R input')
+            value[0] = R.value
+            bgChange()
+            rgbTxt()
+        }
+
+        G.oninput = () => {
+            gValue.innerText = G.value
+            console.log('G input')
+            value[1] = G.value
+            bgChange()
+            rgbTxt()
+
+        }
+
+        B.oninput = () => {
+            bValue.innerText = B.value
+            console.log('B input')
+            value[2] = B.value
+            bgChange()
+            rgbTxt()
+        }
+        console.log(value)
+
+        const randomR = document.getElementById('R-random')
+        const randomG = document.getElementById('G-random')
+        const randomB = document.getElementById('B-random')
+        // const random = [0, 0, 0]
+
+        randomR.onclick = () => {
+            value[0] = Math.floor(Math.random() * 255)
+            rValue.innerText = value[0]
+            rangeR.value = value[0]
+
+            bgChange()
+            rgbTxt()
+        }
+        randomG.onclick = () => {
+            value[1] = Math.floor(Math.random() * 255)
+            gValue.innerText = value[1]
+            rangeG.value = value[1]
+
+            bgChange()
+            rgbTxt()
+        }
+        randomB.onclick = () => {
+            value[2] = Math.floor(Math.random() * 255)
+            bValue.innerText = value[2]
+            rangeB.value = value[2]
+            bgChange()
+            rgbTxt()
+        }
+
+        const Reset = document.getElementById('reset')
+        Reset.onclick = () => {
+            value = [0, 0, 0]
+            rValue.innerText = value[0]
+            gValue.innerText = value[1]
+            bValue.innerText = value[2]
+            rangeR.value = value[0]
+            rangeG.value = value[1]
+            rangeB.value = value[2]
+
+
+            bgChange()
+            rgbTxt()
+            alert('!!! RESET !!!')
+
+        }
+    </script>
+
+
+</body>
+
+</html>
